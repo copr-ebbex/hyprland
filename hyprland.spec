@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.32.2
+Version:        0.32.3
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
