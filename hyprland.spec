@@ -68,6 +68,7 @@ Provides:       bundled(udis86) = 1.7.2^1.git5336633
 
 Requires:       xorg-x11-server-Xwayland%{?_isa}
 Requires:       xdg-desktop-portal%{?_isa}
+Requires:       libdrm%{?_isa} >= 2.4.118
 
 # Both are used in the default configuration
 Recommends:     kitty
