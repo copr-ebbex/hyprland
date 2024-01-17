@@ -139,7 +139,8 @@ cp -p subprojects/wlroots/LICENSE LICENSE-wlroots
 %build
 %meson \
        -Dwlroots:examples=false \
-       -Dwlroots:xcb-errors=disabled
+       -Dwlroots:xcb-errors=disabled \
+       -Dwlroots:werror=false
 %meson_build
 
 
