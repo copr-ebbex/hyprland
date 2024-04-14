@@ -1,11 +1,11 @@
 Name:           hyprland
-Version:        0.38.1
+Version:        0.39.0
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
 # hyprland: BSD-3-Clause
 # subprojects/hyprland-protocols: BSD-3-Clause
-# subprojects/wlroots: MIT
+# subprojects/wlroots-hyprland: MIT
 # subproject/udis86: BSD-2-Clause
 # protocols/ext-workspace-unstable-v1.xml: HPND-sell-variant
 # protocols/wlr-foreign-toplevel-management-unstable-v1.xml: HPND-sell-variant
@@ -62,7 +62,7 @@ BuildRequires:  pkgconfig(xwayland)
 # Upstream insists on always building against very current snapshots of
 # wlroots, and doesn't provide a method for building against a system copy.
 # https://github.com/hyprwm/Hyprland/issues/302
-Provides:       bundled(wlroots) = 0.18.0~1.git50eae51
+Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git62eeffb
 
 # udis86 is packaged in Fedora, but the copy bundled here is actually a
 # modified fork.
@@ -140,31 +140,37 @@ Recommends:     git-core
 rm -rf subprojects/{tracy,hyprland-protocols}
 
 cp -p subprojects/udis86/LICENSE LICENSE-udis86
-cp -p subprojects/wlroots/LICENSE LICENSE-wlroots
+cp -p subprojects/wlroots-hyprland/LICENSE LICENSE-wlroots
 
 
 %build
 %meson \
-       -Dwlroots:examples=false \
-       -Dwlroots:xcb-errors=disabled \
-       -Dwlroots:werror=false
+       -Dwlroots-hyprland:examples=false \
+       -Dwlroots-hyprland:xcb-errors=disabled \
+       -Dwlroots-hyprland:werror=false
 %meson_build
 
 
 %install
-%meson_install --skip-subprojects wlroots
+%meson_install --skip-subprojects wlroots-hyprland
+mkdir -p %{buildroot}%{bash_completions_dir}
+mv %{buildroot}%{_datadir}/bash-completions/hyprctl %{buildroot}%{bash_completions_dir}/hyprctl
+mv %{buildroot}%{_datadir}/bash-completions/hyprpm %{buildroot}%{bash_completions_dir}/hyprpm
 
 
 %files
 %license LICENSE LICENSE-udis86 LICENSE-wlroots
-%{_bindir}/Hyprland
 %{_bindir}/hyprctl
+%{_bindir}/Hyprland
 %{_bindir}/hyprpm
-%{_mandir}/man1/Hyprland.1*
-%{_mandir}/man1/hyprctl.1*
 %{_datadir}/%{name}/
 %{_datadir}/wayland-sessions/%{name}.desktop
 %{_datadir}/xdg-desktop-portal/%{name}-portals.conf
+%{_mandir}/man1/hyprctl.1*
+%{_mandir}/man1/Hyprland.1*
+%{bash_completions_dir}/hypr*
+%{fish_completions_dir}/hypr*.fish
+%{zsh_completions_dir}/_hypr*
 
 %files devel
 %{_includedir}/%{name}/
