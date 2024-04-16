@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.39.0
+Version:        0.39.1
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -62,7 +62,7 @@ BuildRequires:  pkgconfig(xwayland)
 # Upstream insists on always building against very current snapshots of
 # wlroots, and doesn't provide a method for building against a system copy.
 # https://github.com/hyprwm/Hyprland/issues/302
-Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git62eeffb
+Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git611a4f2
 
 # udis86 is packaged in Fedora, but the copy bundled here is actually a
 # modified fork.
@@ -154,8 +154,8 @@ cp -p subprojects/wlroots-hyprland/LICENSE LICENSE-wlroots
 %install
 %meson_install --skip-subprojects wlroots-hyprland
 mkdir -p %{buildroot}%{bash_completions_dir}
-mv %{buildroot}%{_datadir}/bash-completions/hyprctl %{buildroot}%{bash_completions_dir}/hyprctl
-mv %{buildroot}%{_datadir}/bash-completions/hyprpm %{buildroot}%{bash_completions_dir}/hyprpm
+mv %{buildroot}%{_datadir}/bash-completion/hyprctl %{buildroot}%{bash_completions_dir}/hyprctl
+mv %{buildroot}%{_datadir}/bash-completion/hyprpm %{buildroot}%{bash_completions_dir}/hyprpm
 
 
 %files
