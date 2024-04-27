@@ -47,12 +47,14 @@ BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(wayland-server) >= 1.22.0
 BuildRequires:  pkgconfig(xcb-composite)
 BuildRequires:  pkgconfig(xcb-dri3)
+BuildRequires:  pkgconfig(xcb-ewmh)
 BuildRequires:  pkgconfig(xcb-icccm)
 BuildRequires:  pkgconfig(xcb-present)
 BuildRequires:  pkgconfig(xcb-render)
 BuildRequires:  pkgconfig(xcb-renderutil)
 BuildRequires:  pkgconfig(xcb-res)
 BuildRequires:  pkgconfig(xcb-shm)
+BuildRequires:  pkgconfig(xcb-util)
 BuildRequires:  pkgconfig(xcb-xfixes)
 BuildRequires:  pkgconfig(xcb-xinput)
 BuildRequires:  pkgconfig(xcb)
@@ -71,6 +73,7 @@ Provides:       bundled(udis86) = 1.7.2^1.git5336633
 Requires:       xorg-x11-server-Xwayland%{?_isa}
 Requires:       xdg-desktop-portal%{?_isa}
 Requires:       libdrm%{?_isa} >= 2.4.120
+Requires:       hyprcursor%{?_isa} >= 0.1.7
 
 # Both are used in the default configuration
 Recommends:     kitty
@@ -90,8 +93,7 @@ very flexible IPC model allowing for a lot of customization, a powerful
 plugin system and more.
 
 %package        devel
-Summary:        Header files for %{name}
-License:        BSD-3-Clause AND MIT
+Summary:        Meta package to install dependencies for hyprpm
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       cmake
 Requires:       cpio
@@ -118,12 +120,14 @@ Requires:       pkgconfig(wayland-scanner)
 Requires:       pkgconfig(wayland-server) >= 1.22.0
 Requires:       pkgconfig(xcb-composite)
 Requires:       pkgconfig(xcb-dri3)
+Requires:       pkgconfig(xcb-ewmh)
 Requires:       pkgconfig(xcb-icccm)
 Requires:       pkgconfig(xcb-present)
 Requires:       pkgconfig(xcb-render)
 Requires:       pkgconfig(xcb-renderutil)
 Requires:       pkgconfig(xcb-res)
 Requires:       pkgconfig(xcb-shm)
+Requires:       pkgconfig(xcb-util)
 Requires:       pkgconfig(xcb-xfixes)
 Requires:       pkgconfig(xcb-xinput)
 Requires:       pkgconfig(xcb)
@@ -156,6 +160,8 @@ cp -p subprojects/wlroots-hyprland/LICENSE LICENSE-wlroots
 mkdir -p %{buildroot}%{bash_completions_dir}
 mv %{buildroot}%{_datadir}/bash-completion/hyprctl %{buildroot}%{bash_completions_dir}/hyprctl
 mv %{buildroot}%{_datadir}/bash-completion/hyprpm %{buildroot}%{bash_completions_dir}/hyprpm
+rm -rf %{buildroot}%{_includedir}/%{name}
+rm -rf %{buildroot}%{_datadir}/pkgconfig/%{name}.pc
 
 
 %files
@@ -173,8 +179,6 @@ mv %{buildroot}%{_datadir}/bash-completion/hyprpm %{buildroot}%{bash_completions
 %{zsh_completions_dir}/_hypr*
 
 %files devel
-%{_includedir}/%{name}/
-%{_datadir}/pkgconfig/%{name}.pc
 
 
 %changelog
