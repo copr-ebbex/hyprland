@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.39.1
+Version:        0.40.0
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -14,6 +14,8 @@ Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its 
 License:        BSD-3-Clause AND MIT AND BSD-2-Clause AND HPND-sell-variant AND LGPL-2.1-or-later
 URL:            https://github.com/hyprwm/Hyprland
 Source:         %{url}/releases/download/v%{version}/source-v%{version}.tar.gz
+Patch:          no-git.patch
+Patch:          https://github.com/hyprwm/Hyprland/commit/ec092bd601d9d351ff6ca34bd97f12055b2a4dd9.patch
 
 # https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
 ExcludeArch:    %{ix86}
@@ -31,6 +33,7 @@ BuildRequires:  pkgconfig(hwdata)
 BuildRequires:  pkgconfig(hyprcursor)
 BuildRequires:  pkgconfig(hyprland-protocols)
 BuildRequires:  pkgconfig(hyprlang)
+BuildRequires:  pkgconfig(hyprwayland-scanner)
 BuildRequires:  pkgconfig(libdisplay-info)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libinput) >= 1.23.0
@@ -41,6 +44,7 @@ BuildRequires:  pkgconfig(pango)
 BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(pixman-1) >= 0.42.0
 BuildRequires:  pkgconfig(tomlplusplus)
+BuildRequires:  pkgconfig(uuid)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-protocols)
 BuildRequires:  pkgconfig(wayland-scanner)
@@ -64,7 +68,7 @@ BuildRequires:  pkgconfig(xwayland)
 # Upstream insists on always building against very current snapshots of
 # wlroots, and doesn't provide a method for building against a system copy.
 # https://github.com/hyprwm/Hyprland/issues/302
-Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git611a4f2
+Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git5c1d51c
 
 # udis86 is packaged in Fedora, but the copy bundled here is actually a
 # modified fork.
@@ -157,9 +161,6 @@ cp -p subprojects/wlroots-hyprland/LICENSE LICENSE-wlroots
 
 %install
 %meson_install --skip-subprojects wlroots-hyprland
-mkdir -p %{buildroot}%{bash_completions_dir}
-mv %{buildroot}%{_datadir}/bash-completion/hyprctl %{buildroot}%{bash_completions_dir}/hyprctl
-mv %{buildroot}%{_datadir}/bash-completion/hyprpm %{buildroot}%{bash_completions_dir}/hyprpm
 rm -rf %{buildroot}%{_includedir}/%{name}
 rm -rf %{buildroot}%{_datadir}/pkgconfig/%{name}.pc
 
