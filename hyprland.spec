@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.40.0
+Version:        0.41.0
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -14,8 +14,6 @@ Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its 
 License:        BSD-3-Clause AND MIT AND BSD-2-Clause AND HPND-sell-variant AND LGPL-2.1-or-later
 URL:            https://github.com/hyprwm/Hyprland
 Source:         %{url}/releases/download/v%{version}/source-v%{version}.tar.gz
-Patch:          no-git.patch
-Patch:          https://github.com/hyprwm/Hyprland/commit/ec092bd601d9d351ff6ca34bd97f12055b2a4dd9.patch
 
 # https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
 ExcludeArch:    %{ix86}
@@ -51,6 +49,7 @@ BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(wayland-server) >= 1.22.0
 BuildRequires:  pkgconfig(xcb-composite)
 BuildRequires:  pkgconfig(xcb-dri3)
+BuildRequires:  pkgconfig(xcb-errors)
 BuildRequires:  pkgconfig(xcb-ewmh)
 BuildRequires:  pkgconfig(xcb-icccm)
 BuildRequires:  pkgconfig(xcb-present)
@@ -68,7 +67,7 @@ BuildRequires:  pkgconfig(xwayland)
 # Upstream insists on always building against very current snapshots of
 # wlroots, and doesn't provide a method for building against a system copy.
 # https://github.com/hyprwm/Hyprland/issues/302
-Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git5c1d51c
+Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git91de8da
 
 # udis86 is packaged in Fedora, but the copy bundled here is actually a
 # modified fork.
@@ -130,6 +129,7 @@ Requires:       pkgconfig(wayland-scanner)
 Requires:       pkgconfig(wayland-server) >= 1.22.0
 Requires:       pkgconfig(xcb-composite)
 Requires:       pkgconfig(xcb-dri3)
+Requires:       pkgconfig(xcb-errors)
 Requires:       pkgconfig(xcb-ewmh)
 Requires:       pkgconfig(xcb-icccm)
 Requires:       pkgconfig(xcb-present)
@@ -152,6 +152,8 @@ Recommends:     git-core
 %prep
 %autosetup -n %{name}-source -p1
 rm -rf subprojects/{tracy,hyprland-protocols}
+# don't run generateVersion.sh, release tarballs have pregenerated version.h
+sed -i '/version_h/d' meson.build
 
 cp -p subprojects/udis86/LICENSE LICENSE-udis86
 cp -p subprojects/wlroots-hyprland/LICENSE LICENSE-wlroots
