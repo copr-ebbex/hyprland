@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.41.0
+Version:        0.41.1
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -31,6 +31,7 @@ BuildRequires:  pkgconfig(hwdata)
 BuildRequires:  pkgconfig(hyprcursor)
 BuildRequires:  pkgconfig(hyprland-protocols)
 BuildRequires:  pkgconfig(hyprlang)
+BuildRequires:  pkgconfig(hyprutils)
 BuildRequires:  pkgconfig(hyprwayland-scanner)
 BuildRequires:  pkgconfig(libdisplay-info)
 BuildRequires:  pkgconfig(libdrm)
@@ -100,9 +101,9 @@ Summary:        Meta package to install dependencies for hyprpm
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       cmake
 Requires:       cpio
+Requires:       gcc-c++
 Requires:       meson
 Requires:       ninja-build
-Requires:       gcc-c++
 Requires:       pkgconfig(cairo)
 Requires:       pkgconfig(egl)
 Requires:       pkgconfig(gbm)
@@ -111,6 +112,7 @@ Requires:       pkgconfig(hwdata)
 Requires:       pkgconfig(hyprcursor)
 Requires:       pkgconfig(hyprland-protocols)
 Requires:       pkgconfig(hyprlang)
+Requires:       pkgconfig(hyprutils)
 Requires:       pkgconfig(hyprwayland-scanner)
 Requires:       pkgconfig(libdisplay-info)
 Requires:       pkgconfig(libdrm)
