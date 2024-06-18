@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.41.1
+Version:        0.39.1
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -31,8 +31,6 @@ BuildRequires:  pkgconfig(hwdata)
 BuildRequires:  pkgconfig(hyprcursor)
 BuildRequires:  pkgconfig(hyprland-protocols)
 BuildRequires:  pkgconfig(hyprlang)
-BuildRequires:  pkgconfig(hyprutils)
-BuildRequires:  pkgconfig(hyprwayland-scanner)
 BuildRequires:  pkgconfig(libdisplay-info)
 BuildRequires:  pkgconfig(libdrm)
 BuildRequires:  pkgconfig(libinput) >= 1.23.0
@@ -43,14 +41,12 @@ BuildRequires:  pkgconfig(pango)
 BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(pixman-1) >= 0.42.0
 BuildRequires:  pkgconfig(tomlplusplus)
-BuildRequires:  pkgconfig(uuid)
 BuildRequires:  pkgconfig(wayland-client)
 BuildRequires:  pkgconfig(wayland-protocols)
 BuildRequires:  pkgconfig(wayland-scanner)
 BuildRequires:  pkgconfig(wayland-server) >= 1.22.0
 BuildRequires:  pkgconfig(xcb-composite)
 BuildRequires:  pkgconfig(xcb-dri3)
-BuildRequires:  pkgconfig(xcb-errors)
 BuildRequires:  pkgconfig(xcb-ewmh)
 BuildRequires:  pkgconfig(xcb-icccm)
 BuildRequires:  pkgconfig(xcb-present)
@@ -68,7 +64,7 @@ BuildRequires:  pkgconfig(xwayland)
 # Upstream insists on always building against very current snapshots of
 # wlroots, and doesn't provide a method for building against a system copy.
 # https://github.com/hyprwm/Hyprland/issues/302
-Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git91de8da
+Provides:       bundled(wlroots-hyprland) = 0.18.0~1.git611a4f2
 
 # udis86 is packaged in Fedora, but the copy bundled here is actually a
 # modified fork.
@@ -101,7 +97,6 @@ Summary:        Meta package to install dependencies for hyprpm
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       cmake
 Requires:       cpio
-Requires:       gcc-c++
 Requires:       meson
 Requires:       ninja-build
 Requires:       pkgconfig(cairo)
@@ -109,11 +104,7 @@ Requires:       pkgconfig(egl)
 Requires:       pkgconfig(gbm)
 Requires:       pkgconfig(glesv2)
 Requires:       pkgconfig(hwdata)
-Requires:       pkgconfig(hyprcursor)
-Requires:       pkgconfig(hyprland-protocols)
 Requires:       pkgconfig(hyprlang)
-Requires:       pkgconfig(hyprutils)
-Requires:       pkgconfig(hyprwayland-scanner)
 Requires:       pkgconfig(libdisplay-info)
 Requires:       pkgconfig(libdrm)
 Requires:       pkgconfig(libinput) >= 1.23.0
@@ -123,15 +114,12 @@ Requires:       pkgconfig(libudev)
 Requires:       pkgconfig(pango)
 Requires:       pkgconfig(pangocairo)
 Requires:       pkgconfig(pixman-1) >= 0.42.0
-Requires:       pkgconfig(tomlplusplus)
-Requires:       pkgconfig(uuid)
 Requires:       pkgconfig(wayland-client)
 Requires:       pkgconfig(wayland-protocols)
 Requires:       pkgconfig(wayland-scanner)
 Requires:       pkgconfig(wayland-server) >= 1.22.0
 Requires:       pkgconfig(xcb-composite)
 Requires:       pkgconfig(xcb-dri3)
-Requires:       pkgconfig(xcb-errors)
 Requires:       pkgconfig(xcb-ewmh)
 Requires:       pkgconfig(xcb-icccm)
 Requires:       pkgconfig(xcb-present)
@@ -154,8 +142,6 @@ Recommends:     git-core
 %prep
 %autosetup -n %{name}-source -p1
 rm -rf subprojects/{tracy,hyprland-protocols}
-# don't run generateVersion.sh, release tarballs have pregenerated version.h
-sed -i '/version_h/d' meson.build
 
 cp -p subprojects/udis86/LICENSE LICENSE-udis86
 cp -p subprojects/wlroots-hyprland/LICENSE LICENSE-wlroots
@@ -171,6 +157,9 @@ cp -p subprojects/wlroots-hyprland/LICENSE LICENSE-wlroots
 
 %install
 %meson_install --skip-subprojects wlroots-hyprland
+mkdir -p %{buildroot}%{bash_completions_dir}
+mv %{buildroot}%{_datadir}/bash-completion/hyprctl %{buildroot}%{bash_completions_dir}/hyprctl
+mv %{buildroot}%{_datadir}/bash-completion/hyprpm %{buildroot}%{bash_completions_dir}/hyprpm
 rm -rf %{buildroot}%{_includedir}/%{name}
 rm -rf %{buildroot}%{_datadir}/pkgconfig/%{name}.pc
 
