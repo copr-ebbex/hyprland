@@ -97,6 +97,7 @@ Summary:        Meta package to install dependencies for hyprpm
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       cmake
 Requires:       cpio
+Requires:       gcc-c++
 Requires:       meson
 Requires:       ninja-build
 Requires:       pkgconfig(cairo)
@@ -104,6 +105,8 @@ Requires:       pkgconfig(egl)
 Requires:       pkgconfig(gbm)
 Requires:       pkgconfig(glesv2)
 Requires:       pkgconfig(hwdata)
+Requires:       pkgconfig(hyprcursor)
+Requires:       pkgconfig(hyprland-protocols)
 Requires:       pkgconfig(hyprlang)
 Requires:       pkgconfig(libdisplay-info)
 Requires:       pkgconfig(libdrm)
@@ -114,6 +117,7 @@ Requires:       pkgconfig(libudev)
 Requires:       pkgconfig(pango)
 Requires:       pkgconfig(pangocairo)
 Requires:       pkgconfig(pixman-1) >= 0.42.0
+Requires:       pkgconfig(tomlplusplus)
 Requires:       pkgconfig(wayland-client)
 Requires:       pkgconfig(wayland-protocols)
 Requires:       pkgconfig(wayland-scanner)
