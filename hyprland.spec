@@ -78,7 +78,6 @@ Requires:       xorg-x11-server-Xwayland%{?_isa}
 Requires:       xdg-desktop-portal%{?_isa}
 Requires:       libdrm%{?_isa} >= 2.4.120
 Requires:       hyprcursor%{?_isa} >= 0.1.7
-Requires:       hyprutils%{?_isa} >= 0.1.5
 
 # Both are used in the default configuration
 Recommends:     kitty
