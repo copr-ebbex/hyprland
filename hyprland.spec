@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.49.0
+Version:        0.50.1
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -76,9 +76,9 @@ Provides:       bundled(udis86) = 1.7.2^1.git5336633
 
 Requires:       xorg-x11-server-Xwayland%{?_isa}
 Requires:       xdg-desktop-portal%{?_isa}
-Requires:       aquamarine%{?_isa} >= 0.8.0
+Requires:       aquamarine%{?_isa} >= 0.9.0
 Requires:       hyprcursor%{?_isa} >= 0.1.9
-Requires:       hyprutils%{?_isa} >= 0.7.0
+Requires:       hyprutils%{?_isa} >= 0.8.1
 Requires:       hyprgraphics%{?_isa} >= 0.1.3
 
 # Used in the default configuration
