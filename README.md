@@ -1,3 +1,0 @@
-# hyprland
-
-The hyprland package
