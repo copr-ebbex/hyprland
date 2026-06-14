@@ -1,0 +1,3 @@
+# hyprland
+
+The hyprland package
