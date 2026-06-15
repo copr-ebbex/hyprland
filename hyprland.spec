@@ -64,7 +64,7 @@ BuildRequires:  pkgconfig(xcb-xfixes)
 BuildRequires:  pkgconfig(xcb)
 BuildRequires:  pkgconfig(xcursor)
 BuildRequires:  pkgconfig(xkbcommon) >= 1.11.0
-BuildRequires:  pkgconfig(lua) >= 5.5
+BuildRequires:  pkgconfig(lua) >= 5.4
 
 # udis86 is packaged in Fedora, but the copy bundled here is actually a
 # modified fork.
@@ -134,7 +134,7 @@ Requires:       pkgconfig(xcb-xfixes)
 Requires:       pkgconfig(xcb)
 Requires:       pkgconfig(xcursor)
 Requires:       pkgconfig(xkbcommon) >= 1.11.0
-Requires:       pkgconfig(lua) >= 5.5
+Requires:       pkgconfig(lua) >= 5.4
 Recommends:     git-core
 
 %description    devel
