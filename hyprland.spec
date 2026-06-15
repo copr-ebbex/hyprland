@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.49.0
+Version:        0.55.4
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -14,72 +14,69 @@ Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its 
 # ./protocols/wlr-output-management-unstable-v1.xml: HPND-sell-variant and/or ntp_disclaimer
 # ./protocols/frog-color-management-v1.xml: HPND-sell-variant and/or ntp_disclaimer
 # ./protocols/xx-color-management-v4.xml: HPND-sell-variant and/or ntp_disclaimer
-License:        BSD-3-Clause AND BSD-2-Clause AND LGPL-2.1-or-later AND HPND-sell-variant
+License:        BSD-3-Clause AND BSD-2-Clause AND LGPL-2.1-or-later AND HPND-sell-variant AND MIT
 URL:            https://github.com/hyprwm/Hyprland
-Source:         %{url}/releases/download/v%{version}/source-v%{version}.tar.gz
+%global glaze_version 7.2.0
+Source0:        %{url}/releases/download/v%{version}/source-v%{version}.tar.gz
+Source1:        https://github.com/stephenberry/glaze/archive/refs/tags/v%{glaze_version}.tar.gz#/glaze-%{glaze_version}.tar.gz
 
 # https://fedoraproject.org/wiki/Changes/EncourageI686LeafRemoval
 ExcludeArch:    %{ix86}
 
 BuildRequires:  cmake
 BuildRequires:  gcc-c++
-BuildRequires:  meson
+BuildRequires:  mesa-libEGL-devel
+BuildRequires:  mesa-libGL-devel
+BuildRequires:  python3
 
-BuildRequires:  pkgconfig(aquamarine)
+BuildRequires:  cmake(glslang)
+BuildRequires:  cmake(hyprwayland-scanner) >= 0.3.10
+
+BuildRequires:  pkgconfig(aquamarine) >= 0.9.3
 BuildRequires:  pkgconfig(cairo)
-BuildRequires:  pkgconfig(egl)
 BuildRequires:  pkgconfig(gbm)
-BuildRequires:  pkgconfig(glesv2)
-BuildRequires:  pkgconfig(hwdata)
-BuildRequires:  pkgconfig(hyprcursor)
-BuildRequires:  pkgconfig(hyprgraphics)
-BuildRequires:  pkgconfig(hyprland-protocols)
-BuildRequires:  pkgconfig(hyprlang)
-BuildRequires:  pkgconfig(hyprutils)
-BuildRequires:  pkgconfig(hyprwayland-scanner)
-BuildRequires:  pkgconfig(libdisplay-info)
+BuildRequires:  pkgconfig(gio-2.0)
+BuildRequires:  pkgconfig(hyprcursor) >= 0.1.7
+BuildRequires:  pkgconfig(hyprgraphics) >= 0.5.1
+BuildRequires:  pkgconfig(hyprland-protocols) >= 0.6.4
+BuildRequires:  pkgconfig(hyprlang) >= 0.6.7
+BuildRequires:  pkgconfig(hyprutils) >= 0.13.1
+BuildRequires:  pkgconfig(hyprwire)
+BuildRequires:  cmake(hyprwire-scanner)
+BuildRequires:  pkgconfig(tomlplusplus)
+BuildRequires:  pkgconfig(lcms2)
 BuildRequires:  pkgconfig(libdrm)
-BuildRequires:  pkgconfig(libinput)
-BuildRequires:  pkgconfig(libliftoff)
-BuildRequires:  pkgconfig(libseat)
-BuildRequires:  pkgconfig(libudev)
+BuildRequires:  pkgconfig(libinput) >= 1.28
+BuildRequires:  pkgconfig(muparser)
 BuildRequires:  pkgconfig(pango)
 BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(pixman-1)
-BuildRequires:  pkgconfig(systemd)
-BuildRequires:  pkgconfig(tomlplusplus)
+BuildRequires:  pkgconfig(re2)
 BuildRequires:  pkgconfig(uuid)
-BuildRequires:  pkgconfig(wayland-client)
-BuildRequires:  pkgconfig(wayland-protocols)
-BuildRequires:  pkgconfig(wayland-server)
+BuildRequires:  pkgconfig(wayland-protocols) >= 1.47
+BuildRequires:  pkgconfig(wayland-server) >= 1.22.91
 BuildRequires:  pkgconfig(xcb-composite)
-BuildRequires:  pkgconfig(xcb-dri3)
 BuildRequires:  pkgconfig(xcb-errors)
-BuildRequires:  pkgconfig(xcb-ewmh)
 BuildRequires:  pkgconfig(xcb-icccm)
-BuildRequires:  pkgconfig(xcb-present)
 BuildRequires:  pkgconfig(xcb-render)
-BuildRequires:  pkgconfig(xcb-renderutil)
 BuildRequires:  pkgconfig(xcb-res)
-BuildRequires:  pkgconfig(xcb-shm)
-BuildRequires:  pkgconfig(xcb-util)
 BuildRequires:  pkgconfig(xcb-xfixes)
-BuildRequires:  pkgconfig(xcb-xinput)
 BuildRequires:  pkgconfig(xcb)
 BuildRequires:  pkgconfig(xcursor)
-BuildRequires:  pkgconfig(xkbcommon)
-BuildRequires:  pkgconfig(xwayland)
+BuildRequires:  pkgconfig(xkbcommon) >= 1.11.0
+BuildRequires:  pkgconfig(lua) >= 5.5
 
 # udis86 is packaged in Fedora, but the copy bundled here is actually a
 # modified fork.
 Provides:       bundled(udis86) = 1.7.2^1.git5336633
+Provides:       bundled(glaze) = %{glaze_version}
 
 Requires:       xorg-x11-server-Xwayland%{?_isa}
 Requires:       xdg-desktop-portal%{?_isa}
-Requires:       aquamarine%{?_isa} >= 0.8.0
-Requires:       hyprcursor%{?_isa} >= 0.1.9
-Requires:       hyprutils%{?_isa} >= 0.7.0
-Requires:       hyprgraphics%{?_isa} >= 0.1.3
+Requires:       aquamarine%{?_isa} >= 0.9.3
+Requires:       hyprcursor%{?_isa} >= 0.1.7
+Requires:       hyprutils%{?_isa} >= 0.13.1
+Requires:       hyprgraphics%{?_isa} >= 0.5.1
 
 # Used in the default configuration
 Recommends:     kitty
@@ -106,50 +103,38 @@ Requires:       %{name}%{?_isa} = %{version}-%{release}
 Requires:       cmake
 Requires:       cpio
 Requires:       gcc-c++
-Requires:       meson
-Requires:       ninja-build
-Requires:       pkgconfig(aquamarine)
+Requires:       cmake(glslang)
+Requires:       cmake(hyprwayland-scanner) >= 0.3.10
+Requires:       pkgconfig(aquamarine) >= 0.9.3
 Requires:       pkgconfig(cairo)
-Requires:       pkgconfig(egl)
 Requires:       pkgconfig(gbm)
-Requires:       pkgconfig(glesv2)
-Requires:       pkgconfig(hwdata)
-Requires:       pkgconfig(hyprcursor)
-Requires:       pkgconfig(hyprgraphics)
-Requires:       pkgconfig(hyprlang)
-Requires:       pkgconfig(hyprutils)
-Requires:       pkgconfig(hyprwayland-scanner)
-Requires:       pkgconfig(libdisplay-info)
+Requires:       pkgconfig(gio-2.0)
+Requires:       pkgconfig(hyprcursor) >= 0.1.7
+Requires:       pkgconfig(hyprgraphics) >= 0.5.1
+Requires:       pkgconfig(hyprland-protocols) >= 0.6.4
+Requires:       pkgconfig(hyprlang) >= 0.6.7
+Requires:       pkgconfig(hyprutils) >= 0.13.1
+Requires:       pkgconfig(lcms2)
 Requires:       pkgconfig(libdrm)
-Requires:       pkgconfig(libinput)
-Requires:       pkgconfig(libliftoff)
-Requires:       pkgconfig(libseat)
-Requires:       pkgconfig(libudev)
+Requires:       pkgconfig(libinput) >= 1.28
+Requires:       pkgconfig(muparser)
 Requires:       pkgconfig(pango)
 Requires:       pkgconfig(pangocairo)
 Requires:       pkgconfig(pixman-1)
-Requires:       pkgconfig(tomlplusplus)
+Requires:       pkgconfig(re2)
 Requires:       pkgconfig(uuid)
-Requires:       pkgconfig(wayland-client)
-Requires:       pkgconfig(wayland-protocols)
-Requires:       pkgconfig(wayland-server)
+Requires:       pkgconfig(wayland-protocols) >= 1.47
+Requires:       pkgconfig(wayland-server) >= 1.22.91
 Requires:       pkgconfig(xcb-composite)
-Requires:       pkgconfig(xcb-dri3)
 Requires:       pkgconfig(xcb-errors)
-Requires:       pkgconfig(xcb-ewmh)
 Requires:       pkgconfig(xcb-icccm)
-Requires:       pkgconfig(xcb-present)
 Requires:       pkgconfig(xcb-render)
-Requires:       pkgconfig(xcb-renderutil)
 Requires:       pkgconfig(xcb-res)
-Requires:       pkgconfig(xcb-shm)
-Requires:       pkgconfig(xcb-util)
 Requires:       pkgconfig(xcb-xfixes)
-Requires:       pkgconfig(xcb-xinput)
 Requires:       pkgconfig(xcb)
 Requires:       pkgconfig(xcursor)
-Requires:       pkgconfig(xkbcommon)
-Requires:       pkgconfig(xwayland)
+Requires:       pkgconfig(xkbcommon) >= 1.11.0
+Requires:       pkgconfig(lua) >= 5.5
 Recommends:     git-core
 
 %description    devel
@@ -159,32 +144,45 @@ Recommends:     git-core
 %prep
 %autosetup -n %{name}-source -p1
 rm -rf subprojects/{tracy,hyprland-protocols}
-# don't run generateVersion.sh, release tarballs have pregenerated version.h
-sed -i '/scripts\/generateVersion.sh/d' meson.build
 
 cp -p subprojects/udis86/LICENSE LICENSE-udis86
 
+# -Wpedantic causes GCC to error on zero-length VTable arrays generated
+# by hyprwayland-scanner; can't use build flags because CMake appends
+# after RPM optflags
+sed -i 's/-Wpedantic//' CMakeLists.txt
+
+# Build glaze (header-only) and install to local prefix
+tar xf %{SOURCE1}
+cmake -S glaze-%{glaze_version} -B glaze-build \
+    -DCMAKE_INSTALL_PREFIX=%{_builddir}/glaze-install \
+    -DCMAKE_BUILD_TYPE=Release \
+    -DBUILD_TESTING=OFF \
+    -Dglaze_INSTALL=ON
+cmake --install glaze-build
+
+cp -p glaze-%{glaze_version}/LICENSE LICENSE-glaze
+
 
 %build
-%meson
-%meson_build
+%cmake -Dglaze_DIR=%{_builddir}/glaze-install/share/glaze
+%cmake_build
 
 
 %install
-%meson_install
-rm %{buildroot}%{_userunitdir}/hyprland-session.service \
-   %{buildroot}%{_datadir}/wayland-sessions/hyprland-systemd.desktop
-rm -rf %{buildroot}%{_includedir}/%{name}
-rm -rf %{buildroot}%{_datadir}/pkgconfig/%{name}.pc
+%cmake_install
 
 
 %files
-%license LICENSE LICENSE-udis86
+%license LICENSE LICENSE-udis86 LICENSE-glaze
 %{_bindir}/hyprctl
 %{_bindir}/Hyprland
+%{_bindir}/hyprland
 %{_bindir}/hyprpm
+%{_bindir}/start-hyprland
 %{_datadir}/hypr/
 %{_datadir}/wayland-sessions/%{name}.desktop
+%{_datadir}/wayland-sessions/%{name}-uwsm.desktop
 %{_datadir}/xdg-desktop-portal/%{name}-portals.conf
 %{_mandir}/man1/hyprctl.1*
 %{_mandir}/man1/Hyprland.1*
@@ -193,6 +191,8 @@ rm -rf %{buildroot}%{_datadir}/pkgconfig/%{name}.pc
 %{zsh_completions_dir}/_hypr*
 
 %files devel
+%{_datadir}/pkgconfig/%{name}.pc
+%{_includedir}/%{name}/
 
 
 %changelog
