@@ -79,17 +79,17 @@ Requires:       hyprutils%{?_isa} >= 0.13.1
 Requires:       hyprgraphics%{?_isa} >= 0.5.1
 
 # Used in the default configuration
-Recommends:     kitty
-Recommends:     wofi
-Recommends:     playerctl
-Recommends:     brightnessctl
+Suggests:       kitty
+Suggests:       wofi
+Suggests:       playerctl
+Suggests:       brightnessctl
 # Lack of graphical drivers may hurt the common use case
-Recommends:     mesa-dri-drivers
+Suggests:       mesa-dri-drivers
 # Logind needs polkit to create a graphical session
-Recommends:     polkit
+Suggests:       polkit
 
-Recommends:     (qt5-qtwayland if qt5-qtbase-gui)
-Recommends:     (qt6-qtwayland if qt6-qtbase-gui)
+Suggests:       (qt5-qtwayland if qt5-qtbase-gui)
+Suggests:       (qt6-qtwayland if qt6-qtbase-gui)
 
 %description
 Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice
