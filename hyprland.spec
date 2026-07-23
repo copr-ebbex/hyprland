@@ -91,6 +91,8 @@ Suggests:       polkit
 Suggests:       (qt5-qtwayland if qt5-qtbase-gui)
 Suggests:       (qt6-qtwayland if qt6-qtbase-gui)
 
+Requires:       %{name}-data = %{version}-%{release}
+
 %description
 Hyprland is a dynamic tiling Wayland compositor that doesn't sacrifice
 on its looks. It supports multiple layouts, fancy effects, has a
@@ -140,6 +142,14 @@ Recommends:     git-core
 %description    devel
 %{summary}.
 
+%package        data
+Summary:        Architecture-independent data files for Hyprland
+BuildArch:      noarch
+
+%description    data
+Wallpapers, session files, and other architecture-independent data files
+for Hyprland.
+
 
 %prep
 %autosetup -n %{name}-source -p1
@@ -180,15 +190,17 @@ cp -p glaze-%{glaze_version}/LICENSE LICENSE-glaze
 %{_bindir}/hyprland
 %{_bindir}/hyprpm
 %{_bindir}/start-hyprland
-%{_datadir}/hypr/
-%{_datadir}/wayland-sessions/%{name}.desktop
-%{_datadir}/wayland-sessions/%{name}-uwsm.desktop
-%{_datadir}/xdg-desktop-portal/%{name}-portals.conf
 %{_mandir}/man1/hyprctl.1*
 %{_mandir}/man1/Hyprland.1*
 %{bash_completions_dir}/hypr*
 %{fish_completions_dir}/hypr*.fish
 %{zsh_completions_dir}/_hypr*
+
+%files data
+%{_datadir}/hypr/
+%{_datadir}/wayland-sessions/%{name}.desktop
+%{_datadir}/wayland-sessions/%{name}-uwsm.desktop
+%{_datadir}/xdg-desktop-portal/%{name}-portals.conf
 
 %files devel
 %{_datadir}/pkgconfig/%{name}.pc
