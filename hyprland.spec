@@ -1,5 +1,5 @@
 Name:           hyprland
-Version:        0.55.4
+Version:        0.56.0
 Release:        %autorelease
 Summary:        Dynamic tiling Wayland compositor that doesn't sacrifice on its looks
 
@@ -38,7 +38,7 @@ BuildRequires:  pkgconfig(gbm)
 BuildRequires:  pkgconfig(gio-2.0)
 BuildRequires:  pkgconfig(hyprcursor) >= 0.1.7
 BuildRequires:  pkgconfig(hyprgraphics) >= 0.5.1
-BuildRequires:  pkgconfig(hyprland-protocols) >= 0.6.4
+BuildRequires:  pkgconfig(hyprland-protocols) >= 0.7.0
 BuildRequires:  pkgconfig(hyprlang) >= 0.6.7
 BuildRequires:  pkgconfig(hyprutils) >= 0.13.1
 BuildRequires:  pkgconfig(hyprwire)
@@ -46,14 +46,16 @@ BuildRequires:  cmake(hyprwire-scanner)
 BuildRequires:  pkgconfig(tomlplusplus)
 BuildRequires:  pkgconfig(lcms2)
 BuildRequires:  pkgconfig(libdrm)
-BuildRequires:  pkgconfig(libinput) >= 1.28
+BuildRequires:  pkgconfig(libeis-1.0)
+BuildRequires:  pkgconfig(libinput) >= 1.29
 BuildRequires:  pkgconfig(muparser)
 BuildRequires:  pkgconfig(pango)
 BuildRequires:  pkgconfig(pangocairo)
 BuildRequires:  pkgconfig(pixman-1)
 BuildRequires:  pkgconfig(re2)
+BuildRequires:  pkgconfig(readline)
 BuildRequires:  pkgconfig(uuid)
-BuildRequires:  pkgconfig(wayland-protocols) >= 1.47
+BuildRequires:  pkgconfig(wayland-protocols) >= 1.49
 BuildRequires:  pkgconfig(wayland-server) >= 1.22.91
 BuildRequires:  pkgconfig(xcb-composite)
 BuildRequires:  pkgconfig(xcb-errors)
@@ -113,19 +115,21 @@ Requires:       pkgconfig(gbm)
 Requires:       pkgconfig(gio-2.0)
 Requires:       pkgconfig(hyprcursor) >= 0.1.7
 Requires:       pkgconfig(hyprgraphics) >= 0.5.1
-Requires:       pkgconfig(hyprland-protocols) >= 0.6.4
+Requires:       pkgconfig(hyprland-protocols) >= 0.7.0
 Requires:       pkgconfig(hyprlang) >= 0.6.7
 Requires:       pkgconfig(hyprutils) >= 0.13.1
 Requires:       pkgconfig(lcms2)
 Requires:       pkgconfig(libdrm)
-Requires:       pkgconfig(libinput) >= 1.28
+Requires:       pkgconfig(libeis-1.0)
+Requires:       pkgconfig(libinput) >= 1.29
 Requires:       pkgconfig(muparser)
 Requires:       pkgconfig(pango)
 Requires:       pkgconfig(pangocairo)
 Requires:       pkgconfig(pixman-1)
 Requires:       pkgconfig(re2)
+Requires:       pkgconfig(readline)
 Requires:       pkgconfig(uuid)
-Requires:       pkgconfig(wayland-protocols) >= 1.47
+Requires:       pkgconfig(wayland-protocols) >= 1.49
 Requires:       pkgconfig(wayland-server) >= 1.22.91
 Requires:       pkgconfig(xcb-composite)
 Requires:       pkgconfig(xcb-errors)
